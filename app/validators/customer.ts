@@ -1,13 +1,13 @@
 import vine from '@vinejs/vine'
 
-export const createPhoneValudate = vine.compile(
+export const createCustomerValidator = vine.compile(
   vine.object({
-    number: vine
+    fullName: vine.string().trim().maxLength(255).minLength(6),
+    cpf: vine
       .string()
       .trim()
-      .minLength(11)
       .maxLength(15)
+      .minLength(11)
       .transform((value) => value.replace(/\D/g, '')),
-    complement: vine.string().trim().maxLength(50).optional(),
   })
 )
