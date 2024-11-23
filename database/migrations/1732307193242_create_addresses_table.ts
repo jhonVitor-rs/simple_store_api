@@ -14,6 +14,8 @@ export default class extends BaseSchema {
       table.string('complement', 254).nullable()
       table.string('zip_code', 14).notNullable()
 
+      table.string('customer_id').unsigned().references('customers.id').onDelete('CASCADE')
+
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()
     })

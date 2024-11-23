@@ -2,30 +2,15 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column } from '@adonisjs/lucid/orm'
 import { v4 as uuidv4 } from 'uuid'
 
-export default class Address extends BaseModel {
+export default class Phone extends BaseModel {
   @column({ isPrimary: true })
   declare id: string
-
-  @column()
-  declare publicPlace: string
 
   @column()
   declare number: string
 
   @column()
-  declare neighborhood: string
-
-  @column()
-  declare city: string
-
-  @column()
-  declare state: string
-
-  @column()
-  declare complement: string | null
-
-  @column()
-  declare zipCode: string
+  declare description: string | null
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -34,7 +19,7 @@ export default class Address extends BaseModel {
   declare updatedAt: DateTime
 
   @beforeCreate()
-  public static assignUuid(address: Address) {
-    address.id = uuidv4()
+  public static assignUuid(phone: Phone) {
+    phone.id = uuidv4()
   }
 }
