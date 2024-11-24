@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.uuid('id').primary()
+      table.increments('id').primary()
       table.string('public_place', 254).notNullable()
       table.string('number', 6).notNullable()
       table.string('neighborhood', 49).notNullable()
@@ -15,7 +15,7 @@ export default class extends BaseSchema {
       table.string('zip_code', 14).notNullable()
 
       table
-        .string('customer_id')
+        .integer('customer_id')
         .unsigned()
         .references('customers.id')
         .onDelete('CASCADE')

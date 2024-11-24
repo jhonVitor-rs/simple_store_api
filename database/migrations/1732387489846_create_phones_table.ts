@@ -5,12 +5,12 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.uuid('id').primary()
+      table.increments('id').primary()
       table.string('number', 11).notNullable()
       table.string('description', 49).nullable()
 
       table
-        .string('customer_id')
+        .integer('customer_id')
         .unsigned()
         .references('customers.id')
         .onDelete('CASCADE')
