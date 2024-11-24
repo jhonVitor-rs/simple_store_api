@@ -8,6 +8,11 @@ export const createCustomerValidator = vine.compile(
       .trim()
       .maxLength(15)
       .minLength(11)
+      .unique(async (db, value) => {
+        const valueReplace = value.replace(/\D/g, '')
+        const customer = await db.from('customers').where('cpf', valueReplace).first()
+        return !customer
+      })
       .transform((value) => value.replace(/\D/g, '')),
   })
 )
