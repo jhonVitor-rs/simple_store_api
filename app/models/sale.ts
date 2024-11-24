@@ -1,13 +1,12 @@
 import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm'
-import { v4 as uuidv4 } from 'uuid'
 import Customer from './customer.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Product from './product.js'
 
 export default class Sale extends BaseModel {
   @column({ isPrimary: true })
-  declare id: string
+  declare id: number
 
   @column()
   declare amount: number
@@ -29,11 +28,6 @@ export default class Sale extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
-
-  @beforeCreate()
-  public static assignUuid(sale: Sale) {
-    sale.id = uuidv4()
-  }
 
   @beforeCreate()
   public static declareTotalPrice(sale: Sale) {
