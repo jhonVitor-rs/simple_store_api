@@ -4,6 +4,7 @@ import { BaseModel, beforeCreate, column, hasMany, hasOne } from '@adonisjs/luci
 import { v4 as uuidv4 } from 'uuid'
 import Phone from './phone.js'
 import Address from './address.js'
+import Sale from './sale.js'
 
 export default class Customer extends BaseModel {
   @column({ isPrimary: true })
@@ -20,6 +21,9 @@ export default class Customer extends BaseModel {
 
   @hasOne(() => Address)
   declare address: HasOne<typeof Address>
+
+  @hasMany(() => Sale)
+  declare sales: HasMany<typeof Sale>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
