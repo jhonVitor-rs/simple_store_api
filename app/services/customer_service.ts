@@ -79,20 +79,33 @@ export class CustomerService {
         { client: trx }
       )
 
-      await customer.related('address').create(data.address, { client: trx })
-      data.phones.map(async (phone) => {
-        await customer.related('phones').create(phone, { client: trx })
-      })
+      if (data.address) {
+        await customer.related('address').create(data.address, { client: trx })
+      }
+      if (data.phones && data.phones.length > 0) {
+        await Promise.all(
+          data.phones.map(async (phone) => {
+            await customer.related('phones').create(
+              {
+                number: phone.number,
+                description: phone.description,
+              },
+              { client: trx }
+            )
+          })
+        )
+      }
 
-      trx.commit()
+      await trx.commit()
 
-      await customer.refresh()
       await customer.load('address')
       await customer.load('phones')
 
       return customer
     } catch (error) {
-      await trx.rollback()
+      if (trx.isCompleted === false) {
+        await trx.rollback()
+      }
       console.error(error)
       throw new Error('Internal server error.')
     }

@@ -26,6 +26,9 @@ export default class Address extends BaseModel {
   @column()
   declare zipCode: string
 
+  @column()
+  declare customerId: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

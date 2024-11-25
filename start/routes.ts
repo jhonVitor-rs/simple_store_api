@@ -7,6 +7,7 @@
 |
 */
 
+const CustomersController = () => import('#controllers/customers_controller')
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async () => {
@@ -14,3 +15,7 @@ router.get('/', async () => {
     hello: 'world',
   }
 })
+
+router.get('/customer', [CustomersController, 'index'])
+router.post('/customer', [CustomersController, 'store'])
+router.delete('/customer/:id', [CustomersController, 'destroy'])

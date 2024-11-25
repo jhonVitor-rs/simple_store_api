@@ -1,10 +1,13 @@
 ###
+GET http://localhost:3333/customer
+
+###
 POST http://localhost:3333/customer
 Content-Type: application/json
 
 {
   "fullName": "Jhon Doe",
-  "cpf": "012.345.678-09",
+  "cpf": "012.345.678-0",
   "phones": [
     {
       "number": "11999999999",
@@ -20,3 +23,7 @@ Content-Type: application/json
     "zipCode": "12345678"
   }
 }
+
+
+###
+DELETE http://localhost:3333/customer/3
