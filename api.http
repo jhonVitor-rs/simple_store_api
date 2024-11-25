@@ -2,6 +2,9 @@
 GET http://localhost:3333/customer
 
 ###
+GET http://localhost:3333/customer/2?yearMonth=2024-11
+
+###
 POST http://localhost:3333/customer
 Content-Type: application/json
 
@@ -11,7 +14,7 @@ Content-Type: application/json
   "phones": [
     {
       "number": "11999999999",
-      "complement": "Residencial"
+      "description": "Residencial"
     }
   ],
   "address": {
@@ -24,6 +27,24 @@ Content-Type: application/json
   }
 }
 
+###
+PATCH http://localhost:3333/customer/2
+Content-Type: application/json
+
+{
+  "fullName": "Jhon Doe",
+  "cpf": "012.345.678-09",
+  "phones": [
+    {
+      "number": "11999999999",
+      "description": "Residencial"
+    },
+    {
+      "number": "11987097268",
+      "description": "Particular"
+    }
+  ]
+}
 
 ###
 DELETE http://localhost:3333/customer/3

@@ -1,7 +1,9 @@
 import { CustomerService } from '#services/customer_service'
-import { createCustomerValidator } from '#validators/customer'
+import { createCustomerValidator, updateCustomerValidator } from '#validators/customer'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
+import { errors } from '@vinejs/vine'
+import { DateTime } from 'luxon'
 
 @inject()
 export default class CustomersController {
@@ -13,7 +15,7 @@ export default class CustomersController {
 
       response.ok(customers)
     } catch (error) {
-      response.badRequest(error.message)
+      response.internalServerError(error.messages)
     }
   }
 
@@ -24,13 +26,41 @@ export default class CustomersController {
 
       response.ok(newCustomer)
     } catch (error) {
-      response.badRequest(error)
+      if (error instanceof errors.E_VALIDATION_ERROR)
+        response.unprocessableEntity({ errors: error.messages })
+      response.internalServerError({ error: 'Something went wrong.' })
     }
   }
 
-  async show({ params }: HttpContext) {}
+  async show({ params, request, response }: HttpContext) {
+    try {
+      const { id } = params
+      const { yearMonth } = request.qs()
 
-  async update({ params, request }: HttpContext) {}
+      if (!DateTime.fromISO(yearMonth).isValid) {
+        return response.badRequest({ error: 'Invalid yearMonth format. Use ISO 8601 format.' })
+      }
+
+      const customer = await this.customerService.getCustomer(id, yearMonth)
+      response.ok(customer)
+    } catch (error) {
+      response.internalServerError({ error: error.message })
+    }
+  }
+
+  async update({ params, request, response }: HttpContext) {
+    try {
+      const { id } = params
+      const customer = await request.validateUsing(updateCustomerValidator)
+      const updateCustomer = await this.customerService.update(+id, customer)
+
+      response.ok(updateCustomer)
+    } catch (error) {
+      if (error instanceof errors.E_VALIDATION_ERROR)
+        response.unprocessableEntity({ errors: error.messages })
+      response.internalServerError({ error: 'Something went wrong.' })
+    }
+  }
 
   async destroy({ params, response }: HttpContext) {
     try {

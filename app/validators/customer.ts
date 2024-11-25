@@ -22,7 +22,7 @@ export const createCustomerValidator = vine.compile(
           .minLength(11)
           .maxLength(15)
           .transform((value) => value.replace(/\D/g, '')),
-        complement: vine.string().trim().maxLength(50).optional(),
+        description: vine.string().trim().maxLength(50).optional(),
       })
     ),
     address: vine.object({
@@ -49,26 +49,28 @@ export const updateCustomerValidator = vine.compile(
       .string()
       .trim()
       .maxLength(15)
-      .unique(async (db, value) => {
+      .unique(async (db, value, meta) => {
         const valueReplace = value.replace(/\D/g, '')
-        const customer = await db.from('customers').where('cpf', valueReplace).first()
+        const customer = await db
+          .from('customers')
+          .where('cpf', valueReplace)
+          .whereNot('id', meta.data.params.id)
+          .first()
         return !customer
       })
       .transform((value) => value.replace(/\D/g, ''))
       .optional(),
     phones: vine
       .array(
-        vine
-          .object({
-            number: vine
-              .string()
-              .trim()
-              .minLength(11)
-              .maxLength(15)
-              .transform((value) => value.replace(/\D/g, '')),
-            complement: vine.string().trim().maxLength(50).optional(),
-          })
-          .optional()
+        vine.object({
+          number: vine
+            .string()
+            .trim()
+            .minLength(11)
+            .maxLength(15)
+            .transform((value) => value.replace(/\D/g, '')),
+          description: vine.string().trim().maxLength(50).optional(),
+        })
       )
       .optional(),
     address: vine

@@ -52,9 +52,8 @@ export class CustomerService {
             const startOfMonth = dateObj.startOf('month').toSQL()
             const endOfMonth = dateObj.endOf('month').toSQL()
 
-            // sales.whereBetween('createdAt', [startOfMonth, endOfMonth])
-            console.log(startOfMonth)
-            console.log(endOfMonth)
+            if (startOfMonth && endOfMonth)
+              sales.whereBetween('createdAt', [startOfMonth, endOfMonth])
           }
 
           sales.preload('product').orderBy('createdAt', 'desc')
@@ -83,17 +82,7 @@ export class CustomerService {
         await customer.related('address').create(data.address, { client: trx })
       }
       if (data.phones && data.phones.length > 0) {
-        await Promise.all(
-          data.phones.map(async (phone) => {
-            await customer.related('phones').create(
-              {
-                number: phone.number,
-                description: phone.description,
-              },
-              { client: trx }
-            )
-          })
-        )
+        await customer.related('phones').createMany(data.phones, { client: trx })
       }
 
       await trx.commit()
@@ -111,7 +100,7 @@ export class CustomerService {
     }
   }
 
-  async update(id: number, data: Partial<ICustomer>) {
+  async update(id: number, data: DeepPartial<ICustomer>) {
     const trx = await db.transaction()
 
     try {

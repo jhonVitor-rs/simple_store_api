@@ -17,6 +17,12 @@ export default class Sale extends BaseModel {
   @column()
   declare totalPrice: number
 
+  @column()
+  declare customerId: number
+
+  @column()
+  declare productId: number
+
   @belongsTo(() => Customer)
   declare customer: BelongsTo<typeof Customer>
 

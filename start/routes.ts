@@ -16,6 +16,10 @@ router.get('/', async () => {
   }
 })
 
-router.get('/customer', [CustomersController, 'index'])
-router.post('/customer', [CustomersController, 'store'])
-router.delete('/customer/:id', [CustomersController, 'destroy'])
+router.resource('customer', CustomersController).apiOnly()
+
+// router.get('/customer', [CustomersController, 'index'])
+// router.post('/customer', [CustomersController, 'store'])
+// router.put('/customer/:id', [CustomersController, 'update'])
+// router.patch('/customer/:id', [CustomersController, 'update'])
+// router.delete('/customer/:id', [CustomersController, 'destroy'])
