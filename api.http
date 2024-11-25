@@ -1,0 +1,22 @@
+###
+POST http://localhost:3333/customer
+Content-Type: application/json
+
+{
+  "fullName": "Jhon Doe",
+  "cpf": "012.345.678-09",
+  "phones": [
+    {
+      "number": "11999999999",
+      "complement": "Residencial"
+    }
+  ],
+  "address": {
+    "publicPlace": "Rua Principal",
+    "number": "123",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "São Paulo",
+    "zipCode": "12345678"
+  }
+}
