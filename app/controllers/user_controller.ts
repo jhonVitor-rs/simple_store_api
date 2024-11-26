@@ -17,7 +17,6 @@ export default class UserController {
 
       response.ok(token)
     } catch (error) {
-      console.log(error)
       if (error instanceof vineErrors.E_VALIDATION_ERROR)
         response.unprocessableEntity({ errors: error.messages })
       else response.internalServerError({ error: 'Something went wrong.' })
@@ -32,7 +31,6 @@ export default class UserController {
 
       response.ok(token)
     } catch (error) {
-      console.log(error)
       if (error instanceof vineErrors.E_VALIDATION_ERROR)
         response.unprocessableEntity({ errors: error.messages })
       else if (error instanceof authErrors.E_INVALID_CREDENTIALS)

@@ -11,7 +11,7 @@ interface IUser {
 export class UserService {
   async create(data: IUser) {
     const newUser = await User.create(data)
-    console.log(newUser)
+
     if (newUser.$isPersisted) return newUser
     else throw new Error('Internal server error.')
   }

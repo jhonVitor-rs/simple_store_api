@@ -18,16 +18,18 @@ Content-Type: application/json
   "password": "123456789"
 }
 
-// Customers routes
+// <------------------- Customers routes ----------------------->
 ###
 GET http://localhost:3333/customers
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjYzMjIzN30.rBEXleaYUNfmFwVK58jUZoiQrYQJ7BXac1NTdh6znFY
+Authorization: Bearer YOUR_TOKEN
 
 ###
 GET http://localhost:3333/customers/1?yearMonth=2024-10
+Authorization: Bearer YOUR_TOKEN
 
 ###
 POST http://localhost:3333/customers
+Authorization: Bearer YOUR_TOKEN
 Content-Type: application/json
 
 {
@@ -51,6 +53,7 @@ Content-Type: application/json
 
 ###
 PATCH http://localhost:3333/customers/1
+Authorization: Bearer YOUR_TOKEN
 Content-Type: application/json
 
 {
@@ -70,16 +73,20 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3333/customers/3
+Authorization: Bearer YOUR_TOKEN
 
-// Products routes
+// <------------------------- Products routes ------------------------->
 ###
 GET http://localhost:3333/products
+Authorization: Bearer YOUR_TOKEN
 
 ###
 GET http://localhost:3333/products/1
+Authorization: Bearer YOUR_TOKEN
 
 ###
 POST http://localhost:3333/products
+Authorization: Bearer YOUR_TOKEN
 Content-Type: application/json
 
 {
@@ -92,6 +99,7 @@ Content-Type: application/json
 
 ###
 PATCH http://localhost:3333/products/1
+Authorization: Bearer YOUR_TOKEN
 Content-Type: application/json
 
 {
@@ -100,10 +108,12 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3333/products/1
+Authorization: Bearer YOUR_TOKEN
 
-// Sale routes
+// <----------------------------- Sale routes ----------------------------->
 ###
 POST http://localhost:3333/sale
+Authorization: Bearer YOUR_TOKEN
 Content-Type: application/json
 
 {
