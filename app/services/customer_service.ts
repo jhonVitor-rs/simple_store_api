@@ -78,11 +78,8 @@ export class CustomerService {
 
       return customer
     } catch (error) {
-      if (trx.isCompleted === false) {
-        await trx.rollback()
-      }
-      console.error(error)
-      throw new Error()
+      await trx.rollback()
+      throw error
     }
   }
 
@@ -118,8 +115,7 @@ export class CustomerService {
       return customer
     } catch (error) {
       await trx.rollback()
-      console.error(error)
-      throw new Error('Internal server error.')
+      throw error
     }
   }
 

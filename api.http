@@ -3,7 +3,7 @@
 GET http://localhost:3333/customers
 
 ###
-GET http://localhost:3333/customers/2?yearMonth=2024-11
+GET http://localhost:3333/customers/1?yearMonth=2024-10
 
 ###
 POST http://localhost:3333/customers
@@ -79,3 +79,14 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3333/products/1
+
+// Sale routes
+###
+POST http://localhost:3333/sale
+Content-Type: application/json
+
+{
+  "amount": 1,
+  "customerId": 1,
+  "productId": 1
+}
