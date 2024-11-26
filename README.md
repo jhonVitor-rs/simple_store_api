@@ -93,7 +93,7 @@ Possui 5 endpoints, em todas deve ser enviado o token de acesso como um Bearer T
 - `/customers` uma rota post para criar um customer, deve receber os dados do cliente, seus telefones e seu endereço.
 
 ```bash
-${
+{
   "fullName": "string",
   "cpf": "string",
   "phones": [{
@@ -127,7 +127,7 @@ Possui 5 rotas, em todas deve ser enviado o token de acesso como um Bearer Token
 - `/products` uma rota post para criar um produto, ela aceita no corpo da requisição os seguintes campos:
 
 ```bash
-$ {
+{
   "name": "string",
   "description": "string",
   "sku": "string",
@@ -147,9 +147,13 @@ Possui uma rota para a criação de vendas, deve ser enviado o token de verifica
 - `/sales` uma rota post, deve receber no corpo da requisição os campos:
 
 ```bash
-$ {
+{
   "amount": number,
   "customerId": number,
   "productId": number
 }
 ```
+
+## Considerações finais
+
+Fique a vontade para olhar o código e sugerir melhorias
