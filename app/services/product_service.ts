@@ -26,7 +26,9 @@ export class ProductService {
 
   async create(data: IProduct) {
     const product = await Product.create(data)
-    return product
+
+    if (product.$isPersisted) return product
+    else throw new Error('Internal server error')
   }
 
   async update(id: number, data: DeepPartial<IProduct>) {

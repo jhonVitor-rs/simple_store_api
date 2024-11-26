@@ -1,6 +1,27 @@
+// User Routes
+### 
+POST http://localhost:3333/signup
+Content-Type: application/json
+
+{
+  "fullName": "Joao Vitor",
+  "email": "joao.siben@email.com",
+  "password": "123456789"
+}
+
+###
+POST  http://localhost:3333/signin
+Content-Type: application/json
+
+{
+  "email": "joao.siben@email.com",
+  "password": "123456789"
+}
+
 // Customers routes
 ###
 GET http://localhost:3333/customers
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjYzMjIzN30.rBEXleaYUNfmFwVK58jUZoiQrYQJ7BXac1NTdh6znFY
 
 ###
 GET http://localhost:3333/customers/1?yearMonth=2024-10
