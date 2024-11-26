@@ -13,7 +13,7 @@ export const createProductValidator = vine.compile(
         const product = await db.from('products').where('sku', value).first()
         return !product
       }),
-    price: vine.number().positive().max(99999.99).decimal(2),
+    price: vine.number().positive().max(99999.99).decimal([0, 2]),
     amount: vine.number().min(0).withoutDecimals(),
   })
 )
@@ -26,12 +26,16 @@ export const updateProductValidator = vine.compile(
     sku: vine
       .string()
       .maxLength(50)
-      .unique(async (db, value) => {
-        const product = await db.from('products').where('sku', value).first()
+      .unique(async (db, value, meta) => {
+        const product = await db
+          .from('products')
+          .where('sku', value)
+          .whereNot('id', meta.data.params.id)
+          .first()
         return !product
       })
       .optional(),
-    price: vine.number().positive().max(99999.99).decimal(2).optional(),
+    price: vine.number().positive().max(99999.99).decimal([0, 2]).optional(),
     amount: vine.number().min(0).withoutDecimals().optional(),
   })
 )

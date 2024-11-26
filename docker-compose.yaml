@@ -1,0 +1,21 @@
+services:
+  mysql:
+    image: mysql:oraclelinux9
+    # restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: store
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - store
+
+volumes:
+  db:
+    driver: local
+
+networks:
+  store:
+    driver: bridge

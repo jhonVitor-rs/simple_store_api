@@ -28,7 +28,7 @@ export default class ProductsController {
     } catch (error) {
       if (error instanceof vineErrors.E_VALIDATION_ERROR)
         response.unprocessableEntity({ errors: error.messages })
-      response.internalServerError({ error: 'Something went wrong.' })
+      else response.internalServerError({ error: 'Something went wrong.' })
     }
   }
 

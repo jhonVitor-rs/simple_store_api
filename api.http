@@ -1,3 +1,4 @@
+// Customers routes
 ###
 GET http://localhost:3333/customers
 
@@ -28,7 +29,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3333/customers/2
+PATCH http://localhost:3333/customers/1
 Content-Type: application/json
 
 {
@@ -48,3 +49,33 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3333/customers/3
+
+// Products routes
+###
+GET http://localhost:3333/products
+
+###
+GET http://localhost:3333/products/1
+
+###
+POST http://localhost:3333/products
+Content-Type: application/json
+
+{
+  "name": "smartphone",
+  "description": "smartphone from that well-known brand",
+  "sku": "100100",
+  "price": 7000.00,
+  "amount": 15
+}
+
+###
+PATCH http://localhost:3333/products/1
+Content-Type: application/json
+
+{
+  "amount": 20
+}
+
+###
+DELETE http://localhost:3333/products/1
