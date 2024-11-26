@@ -2,7 +2,8 @@ import { CustomerService } from '#services/customer_service'
 import { createCustomerValidator, updateCustomerValidator } from '#validators/customer'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
-import { errors } from '@vinejs/vine'
+import { errors as lucidErrors } from '@adonisjs/lucid'
+import { errors as vineErrors } from '@vinejs/vine'
 import { DateTime } from 'luxon'
 
 @inject()
@@ -26,9 +27,9 @@ export default class CustomersController {
 
       response.ok(newCustomer)
     } catch (error) {
-      if (error instanceof errors.E_VALIDATION_ERROR)
+      if (error instanceof vineErrors.E_VALIDATION_ERROR)
         response.unprocessableEntity({ errors: error.messages })
-      response.internalServerError({ error: 'Something went wrong.' })
+      else response.internalServerError({ error: 'Something went wrong.' })
     }
   }
 
@@ -44,7 +45,9 @@ export default class CustomersController {
       const customer = await this.customerService.getCustomer(id, yearMonth)
       response.ok(customer)
     } catch (error) {
-      response.internalServerError({ error: error.message })
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        response.notFound({ error: error.message })
+      } else response.internalServerError({ error: error.message })
     }
   }
 
@@ -56,9 +59,11 @@ export default class CustomersController {
 
       response.ok(updateCustomer)
     } catch (error) {
-      if (error instanceof errors.E_VALIDATION_ERROR)
+      if (error instanceof vineErrors.E_VALIDATION_ERROR)
         response.unprocessableEntity({ errors: error.messages })
-      response.internalServerError({ error: 'Something went wrong.' })
+      else if (error instanceof lucidErrors.E_ROW_NOT_FOUND)
+        response.notFound({ error: error.message })
+      else response.internalServerError({ error: 'Something went wrong.' })
     }
   }
 
@@ -69,7 +74,8 @@ export default class CustomersController {
 
       response.ok('Customer deleted with success')
     } catch (error) {
-      response.badRequest(error.message)
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) response.notFound({ error: error.message })
+      else response.badRequest(error.message)
     }
   }
 }

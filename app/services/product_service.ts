@@ -15,7 +15,7 @@ export class ProductService {
     return await Product.query().where('isDeleted', false).orderBy('name', 'asc')
   }
 
-  async getProducts(id: number) {
+  async getProduct(id: number) {
     const product = await Product.query()
       .where('id', id)
       .preload('sales', (sales) => sales.preload('customer').orderBy('createdAt', 'desc'))

@@ -7,16 +7,13 @@
 |
 */
 
-const CustomersController = () => import('#controllers/customers_controller')
 import router from '@adonisjs/core/services/router'
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
+const CustomersController = () => import('#controllers/customers_controller')
+const ProductsController = () => import('#controllers/products_controller')
 
-router.resource('customer', CustomersController).apiOnly()
+router.resource('customers', CustomersController).apiOnly()
+router.resource('products', ProductsController).apiOnly()
 
 // router.get('/customer', [CustomersController, 'index'])
 // router.post('/customer', [CustomersController, 'store'])

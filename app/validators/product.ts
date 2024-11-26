@@ -17,3 +17,21 @@ export const createProductValidator = vine.compile(
     amount: vine.number().min(0).withoutDecimals(),
   })
 )
+
+export const updateProductValidator = vine.compile(
+  vine.object({
+    name: vine.string().trim().maxLength(100).optional(),
+    description: vine.string().maxLength(255).optional(),
+    imageUrl: vine.string().maxLength(255).optional(),
+    sku: vine
+      .string()
+      .maxLength(50)
+      .unique(async (db, value) => {
+        const product = await db.from('products').where('sku', value).first()
+        return !product
+      })
+      .optional(),
+    price: vine.number().positive().max(99999.99).decimal(2).optional(),
+    amount: vine.number().min(0).withoutDecimals().optional(),
+  })
+)

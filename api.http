@@ -1,11 +1,11 @@
 ###
-GET http://localhost:3333/customer
+GET http://localhost:3333/customers
 
 ###
-GET http://localhost:3333/customer/2?yearMonth=2024-11
+GET http://localhost:3333/customers/2?yearMonth=2024-11
 
 ###
-POST http://localhost:3333/customer
+POST http://localhost:3333/customers
 Content-Type: application/json
 
 {
@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3333/customer/2
+PATCH http://localhost:3333/customers/2
 Content-Type: application/json
 
 {
@@ -47,4 +47,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3333/customer/3
+DELETE http://localhost:3333/customers/3
