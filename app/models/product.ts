@@ -39,6 +39,6 @@ export default class Product extends BaseModel {
 
   @beforeCreate()
   public static activeProduct(product: Product) {
-    product.isDeleted = true
+    product.isDeleted = false
   }
 }

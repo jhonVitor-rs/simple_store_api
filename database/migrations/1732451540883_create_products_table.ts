@@ -12,7 +12,7 @@ export default class extends BaseSchema {
       table.string('sku', 50).unique().notNullable()
       table.float('price').notNullable()
       table.integer('amount').notNullable()
-      table.boolean('is_deleted').defaultTo(true)
+      table.boolean('is_deleted').defaultTo(false)
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

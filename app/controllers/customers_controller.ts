@@ -52,7 +52,7 @@ export default class CustomersController {
     try {
       const { id } = params
       const customer = await request.validateUsing(updateCustomerValidator)
-      const updateCustomer = await this.customerService.update(+id, customer)
+      const updateCustomer = await this.customerService.update(id, customer)
 
       response.ok(updateCustomer)
     } catch (error) {

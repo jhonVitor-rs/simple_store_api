@@ -27,43 +27,29 @@ interface ICustomer {
 
 export class CustomerService {
   async getAll() {
-    try {
-      const customers = await Customer.query()
-        .orderBy('id', 'asc')
-        .preload('address')
-        .preload('phones')
-
-      return customers || []
-    } catch (error) {
-      console.error(error)
-      throw new Error('Internal server error.')
-    }
+    return await Customer.query().orderBy('id', 'asc').preload('address').preload('phones')
   }
 
   async getCustomer(id: string, date?: string) {
-    try {
-      const customer = await Customer.query()
-        .where('id', id)
-        .preload('address')
-        .preload('phones')
-        .preload('sales', (sales) => {
-          if (date) {
-            const dateObj = DateTime.fromISO(date)
-            const startOfMonth = dateObj.startOf('month').toSQL()
-            const endOfMonth = dateObj.endOf('month').toSQL()
+    const customer = await Customer.query()
+      .where('id', id)
+      .preload('address')
+      .preload('phones')
+      .preload('sales', (sales) => {
+        if (date) {
+          const dateObj = DateTime.fromISO(date)
+          const startOfMonth = dateObj.startOf('month').toSQL()
+          const endOfMonth = dateObj.endOf('month').toSQL()
 
-            if (startOfMonth && endOfMonth)
-              sales.whereBetween('createdAt', [startOfMonth, endOfMonth])
-          }
+          if (startOfMonth && endOfMonth)
+            sales.whereBetween('createdAt', [startOfMonth, endOfMonth])
+        }
 
-          sales.preload('product').orderBy('createdAt', 'desc')
-        })
+        sales.preload('product').orderBy('createdAt', 'desc')
+      })
+      .firstOrFail()
 
-      return customer[0] || null
-    } catch (error) {
-      console.error(error)
-      throw new Error('Internal server error.')
-    }
+    return customer
   }
 
   async create(data: ICustomer) {
@@ -96,7 +82,7 @@ export class CustomerService {
         await trx.rollback()
       }
       console.error(error)
-      throw new Error('Internal server error.')
+      throw new Error()
     }
   }
 
@@ -138,12 +124,7 @@ export class CustomerService {
   }
 
   async delete(id: number) {
-    try {
-      const customer = await Customer.findOrFail(id)
-      await customer.delete()
-    } catch (error) {
-      console.error(error)
-      throw new Error('Internal server error.')
-    }
+    const customer = await Customer.findOrFail(id)
+    await customer.delete()
   }
 }
